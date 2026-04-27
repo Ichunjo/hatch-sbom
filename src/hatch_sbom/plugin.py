@@ -74,8 +74,7 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
 
         try:
             result = subprocess.run(cmd, cwd=self.root, check=True, capture_output=True, text=True)
-            with open(output_path, "w", encoding="utf-8") as f:
-                f.write(result.stdout)
+            output_path.write_text(result.stdout)
         except subprocess.CalledProcessError as e:
             raise Exception(
                 f"Failed to generate SBOM using uv:\n"
