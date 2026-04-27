@@ -1,5 +1,11 @@
 # hatch-sbom
 
+[![PyPI - Version](https://img.shields.io/pypi/v/hatch-sbom.svg)](https://pypi.org/project/hatch-sbom)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hatch-sbom.svg)](https://pypi.org/project/hatch-sbom)
+[![Tests](https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-test.yml/badge.svg)](https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-test.yml)
+[![Lint](https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-lint.yml/badge.svg)](https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-lint.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A Hatchling build hook plugin to automatically generate a Software Bill of Materials (SBOM) during wheel creation using `cyclonedx-py`.
 
 ## Usage

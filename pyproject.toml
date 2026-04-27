@@ -6,6 +6,8 @@ build-backend = "hatchling.build"
 name = "hatch-sbom"
 description = "Hatchling build hook plugin for generating Software Bill of Materials (SBOM)"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [{ name = "Vardë", email = "ichunjo.le.terrible@gmail.com" }]
 maintainers = [{ name = "Vardë", email = "ichunjo.le.terrible@gmail.com" }]
 keywords = ["hatch", "hatchling", "sbom", "cyclonedx", "build-hook"]
