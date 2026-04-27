@@ -59,6 +59,9 @@ jobs:
           name: release-dists
           path: dist
 
+      - name: Remove non-distribution files
+        run: rm dist/*.json
+
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # release/v1
 
