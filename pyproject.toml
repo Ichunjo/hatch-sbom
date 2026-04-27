@@ -34,6 +34,10 @@ classifiers = [
 ]
 dynamic = ["version"]
 
+[project.urls]
+"Source Code" = "https://github.com/Ichunjo/hatch-sbom"
+"Bug Tracker" = "https://github.com/Ichunjo/hatch-sbom/issues"
+
 [project.entry-points.hatch]
 sbom = "hatch_sbom.hooks"
 
