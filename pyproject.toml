@@ -1,0 +1,86 @@
+[build-system]
+requires = ["hatchling>=1.28.0", "hatch-vcs>=0.4.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hatch-sbom"
+description = "Hatchling build hook plugin for generating Software Bill of Materials (SBOM)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "cyclonedx-bom>=7.3.0",
+    "hatchling>=1.28.0",
+    "pdm>=2.26.8",
+    "uv>=0.11.8",
+]
+dynamic = ["version"]
+
+[project.entry-points.hatch]
+sbom = "hatch_sbom.hooks"
+
+[dependency-groups]
+dev = [
+    "build>=1.4.4",
+    "hatchling>=1.29.0",
+    "mypy>=1.20.2, <1.21.0",
+    "ruff>=0.15.12, <0.16.0",
+    { include-group = "test" },
+]
+test = ["pytest>=9.0.3, <10.0.0", "pytest-mock>=3.15.1, <4.0.0"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.mypy]
+exclude_gitignore = true
+
+# Flags changed by --strict
+warn_return_any = false
+extra_checks = false
+
+# Misc
+warn_unreachable = true
+
+allow_redefinition_new = true
+local_partial_types = true
+implicit_reexport = false
+strict = true
+
+show_column_numbers = true
+pretty = true
+color_output = true
+error_summary = true
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+extend-select = [
+    "YTT",
+    "ASYNC",
+    "C4",
+    "LOG",
+    "G",
+    "PIE",
+    "PYI",
+    "PT",
+    "Q",
+    "RSE",
+    "RET",
+    "SIM",
+    "I",
+    "N",
+    "PERF",
+    "E",
+    "W",
+    "UP",
+    "FURB",
+    "RUF",
+]
+ignore = ["N802", "N815"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.*" = ["F401", "F403"]
