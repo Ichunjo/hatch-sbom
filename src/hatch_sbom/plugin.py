@@ -1,4 +1,5 @@
 import subprocess
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -44,7 +45,10 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
 
         output_ext = "json" if fmt == "json" else "xml"
         output_filename = f"sbom.cdx.{output_ext}"
-        output_path = Path(self.directory) / output_filename
+
+        # Use a temporary directory to avoid leaking the SBOM file into the build directory
+        self._temp_dir = tempfile.TemporaryDirectory()
+        output_path = Path(self._temp_dir.name) / output_filename
 
         match source:
             case "uv":
@@ -55,6 +59,11 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
                 self._generate_sbom(source, path, output_path, fmt, spec_version)
 
         build_data.setdefault("sbom_files", []).append(str(output_path))
+
+    def finalize(self, version: str, build_data: dict[str, Any], artifact_path: str) -> None:
+        if hasattr(self, "_temp_dir"):
+            self._temp_dir.cleanup()
+            del self._temp_dir
 
     def _generate_uv_sbom(self, path: str | Path | None, output_path: Path) -> None:
         cmd: list[str | Path] = ["uv", "export", "--format", "cyclonedx1.5"]
