@@ -3,6 +3,7 @@ requires = ["hatchling>=1.28.0", "hatch-vcs>=0.4.0", "uv>=0.11.8"]
 build-backend = "hatchling.build"
 
 [project]
+dynamic = ["version"]
 name = "hatch-sbom"
 description = "Hatchling build hook plugin for generating Software Bill of Materials (SBOM)"
 readme = "README.md"
@@ -12,12 +13,6 @@ authors = [{ name = "Vardë", email = "ichunjo.le.terrible@gmail.com" }]
 maintainers = [{ name = "Vardë", email = "ichunjo.le.terrible@gmail.com" }]
 keywords = ["hatch", "hatchling", "sbom", "cyclonedx", "build-hook"]
 requires-python = ">=3.10"
-dependencies = [
-    "cyclonedx-bom>=7.3.0",
-    "hatchling>=1.28.0",
-    "pdm>=2.26.8",
-    "uv>=0.11.8",
-]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Framework :: Hatch",
@@ -32,7 +27,12 @@ classifiers = [
     "Topic :: Software Development :: Build Tools",
     "Typing :: Typed",
 ]
-dynamic = ["version"]
+dependencies = [
+    "cyclonedx-bom>=7.3.0",
+    "hatchling>=1.28.0",
+    "pdm>=2.26.8",
+    "uv>=0.11.8",
+]
 
 [project.urls]
 "Source Code" = "https://github.com/Ichunjo/hatch-sbom"
