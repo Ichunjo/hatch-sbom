@@ -27,7 +27,7 @@ spec-version = "1.6"   # Optional, defaults to "1.6"
 The `source` field determines how the SBOM is built, mapping to the respective `cyclonedx-py` commands:
 
 - `requirements`: Build an SBOM from Pip requirements.
-  The `path` option is optional; if omitted, the plugin will automatically look for `requirements.txt`, `requirements/requirements.txt`, or `requirements/main.txt`.
+  The `path` option is optional; if omitted, the plugin will automatically look for `requirements.txt`.
 - `poetry`: Build an SBOM from a Poetry project.
   The `path` option is optional and defaults to the current directory.
 - `pipenv`: Build an SBOM from a Pipenv manifest.
