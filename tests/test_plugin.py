@@ -254,6 +254,33 @@ def test_cyclonedx_py_sources(
     assert output_file.name == expected_filename
 
 
+def test_cyclonedx_py_sources_no_path(mocker: MockerFixture, tmp_path: Path) -> None:
+    mock_run = mocker.patch("subprocess.run")
+    output_dir = tmp_path / "dist"
+    output_dir.mkdir()
+
+    # Test with poetry (should NOT append a path)
+    hook = create_hook(tmp_path, {"source": "poetry"})
+    hook.initialize("standard", {})
+
+    cmd_args = mock_run.call_args[0][0]
+    assert cmd_args[0] == "cyclonedx-py"
+    assert cmd_args[1] == "poetry"
+    # No path should be appended between 'poetry' and '--output-format'
+    assert cmd_args[2] == "--output-format"
+
+    # Test with environment (SHOULD append sys.executable)
+    mock_run.reset_mock()
+    hook = create_hook(tmp_path, {"source": "environment"})
+    hook.initialize("standard", {})
+
+    cmd_args = mock_run.call_args[0][0]
+    assert cmd_args[0] == "cyclonedx-py"
+    assert cmd_args[1] == "environment"
+    assert cmd_args[2] == sys.executable
+    assert cmd_args[3] == "--output-format"
+
+
 def test_source_args_ignore_non_dict_config(mocker: MockerFixture, tmp_path: Path) -> None:
     mock_run = mocker.patch("subprocess.run")
 
