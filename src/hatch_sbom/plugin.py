@@ -11,7 +11,14 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
     PLUGIN_NAME = "sbom"
 
     def initialize(self, version: str, build_data: dict[str, Any]) -> None:
+        is_editable = version == "editable" or len(build_data.setdefault("force_include_editable", [])) > 0
+
         if self.target_name != "wheel":
+            self.app.display_debug("Skipping SBOM generation: target_name != wheel")
+            return
+
+        if is_editable:
+            self.app.display_debug("Skipping SBOM generation: editable build")
             return
 
         source = self.config.get("source")
