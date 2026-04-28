@@ -6,6 +6,8 @@
 | Package | [![PyPI - Version](https://img.shields.io/pypi/v/hatch-sbom.svg?logo=pypi&label=PyPI&logoColor=gold)](https://pypi.org/project/hatch-sbom/) [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hatch-sbom.svg?logo=python&label=Python&logoColor=gold)](https://pypi.org/project/hatch-sbom/)                                                                                                                                                                                                                                                 |
 | Meta    | [![Hatch project](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/pypa/hatch/master/docs/assets/badge/v0.json)](https://github.com/pypa/hatch) [![linting - Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff) [![types - Mypy](https://img.shields.io/badge/types-Mypy-blue.svg)](https://github.com/python/mypy) [![License - MIT](https://img.shields.io/badge/license-MIT-9400d3.svg)](https://spdx.org/licenses/MIT.html) |
 
+---
+
 A Hatchling build hook plugin to automatically generate a Software Bill of Materials (SBOM) during wheel creation.
 
 ## Usage
