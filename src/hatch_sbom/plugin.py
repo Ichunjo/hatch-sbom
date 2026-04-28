@@ -75,10 +75,15 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
 
     def _generate_uv_sbom(self, path: str | Path | None, output_path: Path) -> None:
         cmd: list[str | Path] = ["uv", "export", "--format", "cyclonedx1.5"]
+
+        # Default to frozen=True unless explicitly set to False by the user
+        if self.config.get("uv", {}).get("frozen", True):
+            cmd.append("--frozen")
+
         if path:
             cmd.extend(["--project", path])
 
-        self._append_source_args(cmd, "uv")
+        self._append_source_args(cmd, "uv", skip={"frozen"})
 
         # Clear UV_PROJECT_ENVIRONMENT to avoid interacting with the parent uv process's environment
         env = os.environ.copy()
@@ -157,12 +162,16 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
                 f"Stderr: {e.stderr}"
             ) from e
 
-    def _append_source_args(self, cmd: list[str | Path], source: str) -> None:
+    def _append_source_args(self, cmd: list[str | Path], source: str, skip: set[str] | None = None) -> None:
         source_config = self.config.get(source, {})
         if not isinstance(source_config, dict):
             return
 
+        skip = skip or set()
         for key, value in source_config.items():
+            if key in skip:
+                continue
+
             if key == "extra-args" and isinstance(value, list):
                 cmd.extend(str(v) for v in value)
             elif isinstance(value, bool):
