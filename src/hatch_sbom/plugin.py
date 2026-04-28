@@ -85,10 +85,7 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
             cmd.extend(["--project", path])
 
         self._append_source_args(cmd, "uv", skip={"frozen"})
-
-        # Clear UV_PROJECT_ENVIRONMENT to avoid interacting with the parent uv process's environment
-        env = os.environ.copy()
-        env.pop("UV_PROJECT_ENVIRONMENT", None)
+        env = _get_isolated_env()
 
         try:
             result = subprocess.run(cmd, cwd=self.root, check=True, capture_output=True, text=True, env=env)
@@ -108,9 +105,10 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
             pdm_cmd.extend(["--project", path])
 
         self._append_source_args(pdm_cmd, "pdm")
+        env = _get_isolated_env()
 
         try:
-            export_result = subprocess.run(pdm_cmd, cwd=self.root, check=True, capture_output=True, text=True)
+            export_result = subprocess.run(pdm_cmd, cwd=self.root, check=True, capture_output=True, text=True, env=env)
         except subprocess.CalledProcessError as e:
             raise Exception(
                 f"Failed to export dependencies using pdm:\n"
@@ -128,7 +126,9 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
             cmd.extend(["--pyproject", pyproject_path])
 
         try:
-            subprocess.run(cmd, cwd=self.root, check=True, capture_output=True, text=True, input=export_result.stdout)
+            subprocess.run(
+                cmd, cwd=self.root, check=True, capture_output=True, text=True, input=export_result.stdout, env=env
+            )
         except subprocess.CalledProcessError as e:
             raise Exception(
                 f"Failed to generate SBOM using cyclonedx-py:\n"
@@ -154,9 +154,10 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
             cmd.extend(["--pyproject", pyproject_path])
 
         self._append_source_args(cmd, source)
+        env = _get_isolated_env()
 
         try:
-            subprocess.run(cmd, cwd=self.root, check=True, capture_output=True, text=True)
+            subprocess.run(cmd, cwd=self.root, check=True, capture_output=True, text=True, env=env)
         except subprocess.CalledProcessError as e:
             raise Exception(
                 f"Failed to generate SBOM using cyclonedx-py:\n"
@@ -186,3 +187,11 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
                     cmd.extend([f"--{key}", str(item)])
             else:
                 cmd.extend([f"--{key}", str(value)])
+
+
+def _get_isolated_env() -> dict[str, str]:
+    env = os.environ.copy()
+    for key in list(env.keys()):
+        if key.upper().startswith("UV_"):
+            env.pop(key, None)
+    return env
