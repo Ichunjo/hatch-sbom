@@ -21,7 +21,7 @@ def create_hook(tmp_path: Path, config: dict[str, Any], target_name: str = "whee
 def test_skip_non_wheel(tmp_path: Path) -> None:
     hook = create_hook(tmp_path, {"source": "requirements"}, target_name="sdist")
     build_data: dict[str, Any] = {}
-    hook.initialize("1.0", build_data)
+    hook.initialize("standard", build_data)
     assert "sbom_files" not in build_data
 
 
@@ -29,21 +29,21 @@ def test_missing_source(tmp_path: Path) -> None:
     hook = create_hook(tmp_path, {})
     build_data: dict[str, Any] = {}
     with pytest.raises(ValueError, match="The 'source' option is required"):
-        hook.initialize("1.0", build_data)
+        hook.initialize("standard", build_data)
 
 
 def test_invalid_source(tmp_path: Path) -> None:
     hook = create_hook(tmp_path, {"source": "invalid_source"})
     build_data: dict[str, Any] = {}
     with pytest.raises(ValueError, match="Unsupported source 'invalid_source'"):
-        hook.initialize("1.0", build_data)
+        hook.initialize("standard", build_data)
 
 
 def test_missing_path_for_requirements(tmp_path: Path) -> None:
     hook = create_hook(tmp_path, {"source": "requirements"})
     build_data: dict[str, Any] = {}
     with pytest.raises(ValueError, match="Could not automatically find a requirements file for source 'requirements'"):
-        hook.initialize("1.0", build_data)
+        hook.initialize("standard", build_data)
 
 
 def test_guess_path_for_requirements(mocker: MockerFixture, tmp_path: Path) -> None:
@@ -53,7 +53,7 @@ def test_guess_path_for_requirements(mocker: MockerFixture, tmp_path: Path) -> N
 
     hook = create_hook(tmp_path, {"source": "requirements"})
     build_data: dict[str, Any] = {}
-    hook.initialize("1.0", build_data)
+    hook.initialize("standard", build_data)
 
     mock_run.assert_called_once()
     cmd_args = mock_run.call_args[0][0]
@@ -87,7 +87,7 @@ def test_valid_requirements_config(mocker: MockerFixture, tmp_path: Path) -> Non
     )
 
     build_data: dict[str, Any] = {}
-    hook.initialize("1.0", build_data)
+    hook.initialize("standard", build_data)
 
     mock_run.assert_called_once()
 
@@ -130,7 +130,7 @@ def test_pyproject_passed_if_exists(mocker: MockerFixture, tmp_path: Path) -> No
     )
 
     build_data: dict[str, Any] = {}
-    hook.initialize("1.0", build_data)
+    hook.initialize("standard", build_data)
 
     cmd_args = mock_run.call_args[0][0]
     assert "--pyproject" in cmd_args
@@ -158,7 +158,7 @@ def test_uv_source(mocker: MockerFixture, tmp_path: Path) -> None:
     mock_result.stdout = '{"bomFormat": "CycloneDX", "specVersion": "1.5"}'
     mock_run.return_value = mock_result
 
-    hook.initialize("1.0", build_data)
+    hook.initialize("standard", build_data)
 
     mock_run.assert_called_once()
     cmd_args = mock_run.call_args[0][0]
@@ -205,7 +205,7 @@ def test_pdm_source(mocker: MockerFixture, tmp_path: Path) -> None:
     # Return mock_pdm_result for the first call, mock_cdx_result for the second
     mock_run.side_effect = [mock_pdm_result, mock_cdx_result]
 
-    hook.initialize("1.0", build_data)
+    hook.initialize("standard", build_data)
 
     assert mock_run.call_count == 2
 
