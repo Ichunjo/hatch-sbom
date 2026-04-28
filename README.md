@@ -1,10 +1,34 @@
 # Hatch SBOM
 
-|         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CI/CD   | [![CI - Test](https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-test.yml/badge.svg)](https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-test.yml) [![Coverage Status](https://coveralls.io/repos/github/Ichunjo/hatch-sbom/badge.svg?branch=master)](https://coveralls.io/github/Ichunjo/hatch-sbom?branch=master) [![CI - Lint](https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-lint.yml/badge.svg)](https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-lint.yml) [![CD - Publish](https://github.com/Ichunjo/hatch-sbom/actions/workflows/cd-publish.yml/badge.svg)](https://github.com/Ichunjo/hatch-sbom/actions/workflows/cd-publish.yml)                                           |
-| Package | [![PyPI - Version](https://img.shields.io/pypi/v/hatch-sbom.svg?logo=pypi&label=PyPI&logoColor=gold)](https://pypi.org/project/hatch-sbom/) [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hatch-sbom.svg?logo=python&label=Python&logoColor=gold)](https://pypi.org/project/hatch-sbom/)                                                                                                                                                                                                                                                 |
-| Meta    | [![Hatch project](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/pypa/hatch/master/docs/assets/badge/v0.json)](https://github.com/pypa/hatch) [![linting - Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff) [![types - Mypy](https://img.shields.io/badge/types-Mypy-blue.svg)](https://github.com/python/mypy) [![License - MIT](https://img.shields.io/badge/license-MIT-9400d3.svg)](https://spdx.org/licenses/MIT.html) |
+<table>
+  <tbody>
+    <tr>
+      <th scope="row">CI/CD</th>
+      <td>
+        <a href="https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-test.yml"><img src="https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-test.yml/badge.svg" alt="CI - Test"></a>
+        <a href="https://coveralls.io/github/Ichunjo/hatch-sbom?branch=master"><img src="https://coveralls.io/repos/github/Ichunjo/hatch-sbom/badge.svg?branch=master" alt="Coverage Status"></a>
+        <a href="https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-lint.yml"><img src="https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-lint.yml/badge.svg" alt="CI - Lint"></a>
+        <a href="https://github.com/Ichunjo/hatch-sbom/actions/workflows/cd-publish.yml"><img src="https://github.com/Ichunjo/hatch-sbom/actions/workflows/cd-publish.yml/badge.svg" alt="CD - Publish"></a>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Package</th>
+      <td>
+        <a href="https://pypi.org/project/hatch-sbom/"><img src="https://img.shields.io/pypi/v/hatch-sbom.svg?logo=pypi&label=PyPI&logoColor=gold" alt="PyPI - Version"></a>
+        <a href="https://pypi.org/project/hatch-sbom/"><img src="https://img.shields.io/pypi/pyversions/hatch-sbom.svg?logo=python&label=Python&logoColor=gold" alt="PyPI - Python Version"></a>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Meta</th>
+      <td>
+        <a href="https://github.com/pypa/hatch"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/pypa/hatch/master/docs/assets/badge/v0.json" alt="Hatch project"></a>
+        <a href="https://github.com/astral-sh/ruff"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" alt="linting - Ruff"></a>
+        <a href="https://github.com/python/mypy"><img src="https://img.shields.io/badge/types-Mypy-blue.svg" alt="types - Mypy"></a>
+        <a href="https://spdx.org/licenses/MIT.html"><img src="https://img.shields.io/badge/license-MIT-9400d3.svg" alt="License - MIT"></a>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
