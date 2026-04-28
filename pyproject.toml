@@ -121,4 +121,6 @@ extend-select = [
 "__init__.*" = ["F401", "F403"]
 
 [tool.coverage.run]
+branch = true
 omit = ["hatch_build.py"]
+source = ["hatch_sbom"]
