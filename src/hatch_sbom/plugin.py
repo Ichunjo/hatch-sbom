@@ -96,7 +96,7 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
         except subprocess.CalledProcessError as e:
             raise Exception(
                 f"Failed to generate SBOM using uv:\n"
-                f"Command: {' '.join(e.cmd)}\n"
+                f"Command: {' '.join(str(arg) for arg in e.cmd)}\n"
                 f"Exit code: {e.returncode}\n"
                 f"Stdout: {e.stdout}\n"
                 f"Stderr: {e.stderr}"
@@ -114,7 +114,7 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
         except subprocess.CalledProcessError as e:
             raise Exception(
                 f"Failed to export dependencies using pdm:\n"
-                f"Command: {' '.join(e.cmd)}\n"
+                f"Command: {' '.join(str(arg) for arg in e.cmd)}\n"
                 f"Exit code: {e.returncode}\n"
                 f"Stdout: {e.stdout}\n"
                 f"Stderr: {e.stderr}"
@@ -132,7 +132,7 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
         except subprocess.CalledProcessError as e:
             raise Exception(
                 f"Failed to generate SBOM using cyclonedx-py:\n"
-                f"Command: {' '.join(e.cmd)}\n"
+                f"Command: {' '.join(str(arg) for arg in e.cmd)}\n"
                 f"Exit code: {e.returncode}\n"
                 f"Stdout: {e.stdout}\n"
                 f"Stderr: {e.stderr}"
@@ -160,7 +160,7 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
         except subprocess.CalledProcessError as e:
             raise Exception(
                 f"Failed to generate SBOM using cyclonedx-py:\n"
-                f"Command: {' '.join(e.cmd)}\n"
+                f"Command: {' '.join(str(arg) for arg in e.cmd)}\n"
                 f"Exit code: {e.returncode}\n"
                 f"Stdout: {e.stdout}\n"
                 f"Stderr: {e.stderr}"
