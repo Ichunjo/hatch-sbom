@@ -1,3 +1,4 @@
+import os
 import subprocess
 import tempfile
 from pathlib import Path
@@ -79,8 +80,12 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
 
         self._append_source_args(cmd, "uv")
 
+        # Clear UV_PROJECT_ENVIRONMENT to avoid interacting with the parent uv process's environment
+        env = os.environ.copy()
+        env.pop("UV_PROJECT_ENVIRONMENT", None)
+
         try:
-            result = subprocess.run(cmd, cwd=self.root, check=True, capture_output=True, text=True)
+            result = subprocess.run(cmd, cwd=self.root, check=True, capture_output=True, text=True, env=env)
             output_path.write_text(result.stdout)
         except subprocess.CalledProcessError as e:
             raise Exception(
