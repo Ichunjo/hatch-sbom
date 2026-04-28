@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.28.0", "hatch-vcs>=0.4.0", "uv>=0.11.8"]
+requires = ["hatchling>=1.28.0, <2.0.0", "hatch-vcs>=0.4.0", "uv>=0.11.8"]
 build-backend = "hatchling.build"
 
 [project]
@@ -27,12 +27,12 @@ classifiers = [
     "Topic :: Software Development :: Build Tools",
     "Typing :: Typed",
 ]
-dependencies = [
-    "cyclonedx-bom>=7.3.0",
-    "hatchling>=1.28.0",
-    "pdm>=2.26.8",
-    "uv>=0.11.8",
-]
+dependencies = ["hatchling>=1.28.0, <2.0.0"]
+
+[project.optional-dependencies]
+cdx = ["cyclonedx-bom>=7.3.0, <8.0.0"]
+pdm = ["pdm>=2.26.8, <3.0.0"]
+uv = ["uv>=0.11.8"]
 
 [project.urls]
 "Source Code" = "https://github.com/Ichunjo/hatch-sbom"

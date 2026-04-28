@@ -6,17 +6,25 @@
 [![Lint](https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-lint.yml/badge.svg?cacheSeconds=300)](https://github.com/Ichunjo/hatch-sbom/actions/workflows/ci-lint.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A Hatchling build hook plugin to automatically generate a Software Bill of Materials (SBOM) during wheel creation using `cyclonedx-py`.
+A Hatchling build hook plugin to automatically generate a Software Bill of Materials (SBOM) during wheel creation.
 
 ## Usage
 
-To use this plugin, you must configure your `pyproject.toml` to require both `hatchling` (>=1.28.0) and `hatch-sbom` in your `build-system`:
+To use this plugin, configure your `pyproject.toml` to require both `hatchling` (>=1.28.0) and `hatch-sbom` in your `build-system`.
+
+For a `requirements.txt` SBOM:
 
 ```toml
 [build-system]
-requires = ["hatchling>=1.28.0", "hatch-sbom"]
+requires = ["hatchling>=1.28.0", "hatch-sbom[cdx]"]
 build-backend = "hatchling.build"
 ```
+
+The base install is minimal. Install extras only for the backend used by your selected source:
+
+- `requirements`, `poetry`, `pipenv`, and `environment` use `cyclonedx-py` and need `hatch-sbom[cdx]`.
+- `uv` uses `uv export` directly and needs `hatch-sbom[uv]`.
+- `pdm` uses both `pdm export` and `cyclonedx-py`, so it needs `hatch-sbom[pdm,cdx]`.
 
 Next, configure the build hook specifically for the `wheel` target:
 
@@ -30,21 +38,18 @@ spec-version = "1.6"   # Optional, defaults to "1.6"
 
 ### Supported Sources
 
-The `source` field determines how the SBOM is built, mapping to the respective `cyclonedx-py` commands:
+The `source` field determines how the SBOM is built.
 
-- `requirements`: Build an SBOM from Pip requirements.
-  The `path` option is optional; if omitted, the plugin will automatically look for `requirements.txt`.
-- `poetry`: Build an SBOM from a Poetry project.
-  The `path` option is optional and defaults to the current directory.
-- `pipenv`: Build an SBOM from a Pipenv manifest.
-  The `path` option is optional and defaults to the current directory.
-- `environment`: Build an SBOM from a Python environment.
-  The `path` option is optional and defaults to the current directory.
-- `uv`: Build an SBOM using `uv export`. Requires a `uv.lock` file.
-  The `path` option is optional and defaults to the current directory.
-  Only supports `json` format and `1.5` spec-version.
-- `pdm`: Build an SBOM using `pdm export` and `cyclonedx-py`. Requires a `pdm.lock` file.
-  The `path` option is optional and defaults to the current directory.
+| Source         | Requires              | Backend                                        | Path behavior                                                     |
+| -------------- | --------------------- | ---------------------------------------------- | ----------------------------------------------------------------- |
+| `requirements` | `hatch-sbom[cdx]`     | `cyclonedx-py requirements`                    | Optional; defaults to `requirements.txt` when present.            |
+| `poetry`       | `hatch-sbom[cdx]`     | `cyclonedx-py poetry`                          | Optional; defaults to the current directory.                      |
+| `pipenv`       | `hatch-sbom[cdx]`     | `cyclonedx-py pipenv`                          | Optional; defaults to the current directory.                      |
+| `environment`  | `hatch-sbom[cdx]`     | `cyclonedx-py environment`                     | Optional; defaults to the current directory.                      |
+| `uv`           | `hatch-sbom[uv]`      | `uv export`                                    | Optional; defaults to the current directory. Requires `uv.lock`.  |
+| `pdm`          | `hatch-sbom[pdm,cdx]` | `pdm export`, then `cyclonedx-py requirements` | Optional; defaults to the current directory. Requires `pdm.lock`. |
+
+The `uv` source only supports `json` format and CycloneDX `1.5`.
 
 ### Source-Specific Arguments
 
