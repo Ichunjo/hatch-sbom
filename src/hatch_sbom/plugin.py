@@ -87,7 +87,8 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
                 f"Failed to generate SBOM using uv:\n"
                 f"Command: {' '.join(e.cmd)}\n"
                 f"Exit code: {e.returncode}\n"
-                f"Error: {e.stderr}"
+                f"Stdout: {e.stdout}\n"
+                f"Stderr: {e.stderr}"
             ) from e
 
     def _generate_pdm_sbom(self, path: str | Path | None, output_path: Path, fmt: str, spec_version: str) -> None:
@@ -104,7 +105,8 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
                 f"Failed to export dependencies using pdm:\n"
                 f"Command: {' '.join(e.cmd)}\n"
                 f"Exit code: {e.returncode}\n"
-                f"Error: {e.stderr}"
+                f"Stdout: {e.stdout}\n"
+                f"Stderr: {e.stderr}"
             ) from e
 
         cmd: list[str | Path] = ["cyclonedx-py", "requirements", "-"]
@@ -115,20 +117,14 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
             cmd.extend(["--pyproject", pyproject_path])
 
         try:
-            subprocess.run(
-                cmd,
-                cwd=self.root,
-                check=True,
-                capture_output=True,
-                text=True,
-                input=export_result.stdout,
-            )
+            subprocess.run(cmd, cwd=self.root, check=True, capture_output=True, text=True, input=export_result.stdout)
         except subprocess.CalledProcessError as e:
             raise Exception(
                 f"Failed to generate SBOM using cyclonedx-py:\n"
                 f"Command: {' '.join(e.cmd)}\n"
                 f"Exit code: {e.returncode}\n"
-                f"Error: {e.stderr}"
+                f"Stdout: {e.stdout}\n"
+                f"Stderr: {e.stderr}"
             ) from e
 
     def _generate_sbom(
@@ -152,7 +148,8 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
                 f"Failed to generate SBOM using cyclonedx-py:\n"
                 f"Command: {' '.join(e.cmd)}\n"
                 f"Exit code: {e.returncode}\n"
-                f"Error: {e.stderr}"
+                f"Stdout: {e.stdout}\n"
+                f"Stderr: {e.stderr}"
             ) from e
 
     def _append_source_args(self, cmd: list[str | Path], source: str) -> None:
