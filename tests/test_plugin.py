@@ -1,4 +1,5 @@
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -264,6 +265,7 @@ def test_source_args_ignore_non_dict_config(mocker: MockerFixture, tmp_path: Pat
     assert cmd_args == [
         "cyclonedx-py",
         "environment",
+        sys.executable,
         "--output-format",
         "json",
         "--output-file",

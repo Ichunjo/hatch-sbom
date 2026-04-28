@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -143,6 +144,9 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
         cmd: list[str | Path] = ["cyclonedx-py", source]
         if path:
             cmd.append(path)
+        elif source == "environment":
+            cmd.append(sys.executable)
+
         cmd.extend(["--output-format", fmt, "--output-file", output_path, "--spec-version", spec_version])
 
         pyproject_path = Path(self.root) / "pyproject.toml"
