@@ -43,7 +43,7 @@ sbom = "hatch_sbom.hooks"
 
 [dependency-groups]
 dev = [
-    "mypy>=2.0.0, <2.1.0",
+    "mypy>=2.1.0, <2.2.0",
     "ruff>=0.15.12, <0.16.0",
     { include-group = "test" },
 ]
