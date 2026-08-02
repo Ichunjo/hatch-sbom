@@ -77,7 +77,7 @@ requires-python = ">=3.12"
     assert len(wheels) >= 1
 
     # Check the latest wheel
-    wheel_path = sorted(wheels, key=lambda p: p.stat().st_mtime)[-1]
+    wheel_path = max(wheels, key=lambda p: p.stat().st_mtime)
     with zipfile.ZipFile(wheel_path) as z:
         namelist = z.namelist()
         sbom_files = [n for n in namelist if n.endswith("sbom.cdx.json")]
