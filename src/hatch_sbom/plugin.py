@@ -91,7 +91,7 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
             result = subprocess.run(cmd, cwd=self.root, check=True, capture_output=True, text=True, env=env)
             output_path.write_text(result.stdout)
         except subprocess.CalledProcessError as e:
-            raise Exception(
+            raise SbomError(
                 f"Failed to generate SBOM using uv:\n"
                 f"Command: {' '.join(str(arg) for arg in e.cmd)}\n"
                 f"Exit code: {e.returncode}\n"
@@ -110,7 +110,7 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
         try:
             export_result = subprocess.run(pdm_cmd, cwd=self.root, check=True, capture_output=True, text=True, env=env)
         except subprocess.CalledProcessError as e:
-            raise Exception(
+            raise SbomError(
                 f"Failed to export dependencies using pdm:\n"
                 f"Command: {' '.join(str(arg) for arg in e.cmd)}\n"
                 f"Exit code: {e.returncode}\n"
@@ -130,7 +130,7 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
                 cmd, cwd=self.root, check=True, capture_output=True, text=True, input=export_result.stdout, env=env
             )
         except subprocess.CalledProcessError as e:
-            raise Exception(
+            raise SbomError(
                 f"Failed to generate SBOM using cyclonedx-py:\n"
                 f"Command: {' '.join(str(arg) for arg in e.cmd)}\n"
                 f"Exit code: {e.returncode}\n"
@@ -159,7 +159,7 @@ class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
         try:
             subprocess.run(cmd, cwd=self.root, check=True, capture_output=True, text=True, env=env)
         except subprocess.CalledProcessError as e:
-            raise Exception(
+            raise SbomError(
                 f"Failed to generate SBOM using cyclonedx-py:\n"
                 f"Command: {' '.join(str(arg) for arg in e.cmd)}\n"
                 f"Exit code: {e.returncode}\n"
@@ -195,3 +195,6 @@ def _get_isolated_env() -> dict[str, str]:
         if key.upper().startswith("UV_"):
             env.pop(key, None)
     return env
+
+
+class SbomError(RuntimeError): ...
