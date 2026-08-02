@@ -421,7 +421,7 @@ requires-dist = [
     { name = "cyclonedx-bom", marker = "extra == 'cdx'", specifier = ">=7.3.0,<8.0.0" },
     { name = "hatchling", specifier = ">=1.28.0,<2.0.0" },
     { name = "pdm", marker = "extra == 'pdm'", specifier = ">=2.26.8,<3.0.0" },
-    { name = "uv", marker = "extra == 'uv'", specifier = ">=0.11.8" },
+    { name = "uv", marker = "extra == 'uv'", specifier = ">=0.12.0" },
 ]
 provides-extras = ["cdx", "pdm", "uv"]
 

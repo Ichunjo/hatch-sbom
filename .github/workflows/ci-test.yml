@@ -42,3 +42,6 @@ jobs:
         with:
           file: coverage.xml
           format: cobertura
+
+      - name: Test build
+        run: uv build
