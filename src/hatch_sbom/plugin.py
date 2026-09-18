@@ -9,7 +9,7 @@ from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 from hatchling.builders.wheel import WheelBuilderConfig
 
 
-class SbomBuildHook(BuildHookInterface[WheelBuilderConfig]):
+class SbomBuildHook(BuildHookInterface[WheelBuilderConfig, Any]):
     PLUGIN_NAME = "sbom"
 
     def initialize(self, version: str, build_data: dict[str, Any]) -> None:
