@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling==1.32.3", "hatch-vcs==0.5.0", "uv==0.12.19"]
+requires = ["hatchling==1.32.4", "hatch-vcs==0.5.0", "uv==0.12.19"]
 build-backend = "hatchling.build"
 
 [project]
@@ -27,7 +27,7 @@ classifiers = [
     "Topic :: Software Development :: Build Tools",
     "Typing :: Typed",
 ]
-dependencies = ["hatchling==1.32.3, <2.0.0"]
+dependencies = ["hatchling==1.32.4, <2.0.0"]
 
 [project.optional-dependencies]
 cdx = ["cyclonedx-bom>=7.3.0, <8.0.0"]
