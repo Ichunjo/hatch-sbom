@@ -30,7 +30,7 @@ classifiers = [
 dependencies = ["hatchling==1.32.3, <2.0.0"]
 
 [project.optional-dependencies]
-cdx = ["cyclonedx-bom>=7.3.0, <8.0.0"]
+cdx = ["cyclonedx-bom>=8.0.1, <8.1.0"]
 pdm = ["pdm>=2.26.8, <3.0.0"]
 uv = ["uv>=0.12.0"]
 
